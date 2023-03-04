@@ -22,9 +22,25 @@ dummy.Rout: dummy.R
 simulate.Rout: simulate.R dummy.rds
 	$(pipeR)
 
-fit.Rout: fit.R simulate.rds
+main.Rout: main.R
 	$(pipeR)
 
+full.Rout: full.R
+	$(pipeR)
+
+## main.fit.Rout: fit.R
+## full.fit.Rout: fit.R
+%.fit.Rout: fit.R simulate.rds %.rda
+	$(pipeR)
+
+## main.varpred.Rout: varpred.R
+%.varpred.Rout: varpred.R ordfuns.rda %.fit.rda 
+	$(pipeR)
+
+## main.effplot.Rout: effplot.R
+## full.effplot.Rout: effplot.R
+%.effplot.Rout: effplot.R %.varpred.rds %.rda
+	$(pipeR)
 
 ######################################################################
 

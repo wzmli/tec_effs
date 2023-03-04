@@ -1,8 +1,9 @@
 library(shellpipes)
+loadEnvironments()
 
 dat <- rdsRead()
 
-modAns <- model.frame(new_y ~ age + sex 
+modAns <- model.frame(formula
 	, data =dat
 	, na.action = na.exclude
 	, drop.unused.levels=TRUE
@@ -12,22 +13,14 @@ modAns <- model.frame(new_y ~ age + sex
 attr(modAns, "terms") <- NULL 
 
 
-mod <- glm(new_y ~ age + sex
+mod <- glm(formula
 	, family = "binomial"
 	, data=modAns
 )
 
 print(summary(mod))
 
-
-mod_full <- glm(new_y ~ age*sex
-	, family = "binomial"
-	, data=modAns
-)
-
-
-print(summary(mod_full))
-
+saveVars(modAns, mod)
 
 
 

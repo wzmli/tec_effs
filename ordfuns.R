@@ -146,14 +146,15 @@ tidyvarpred <- function(fitmod,var,modframe,Smat){
 	dd <- varpred(fitmod,var,modframe,Smat)
 	colnames(dd) <- c("lvl","fit","lwr","upr")
 	dd2 <- (dd 
-					%>% mutate(var=var
-										 , fit = plogis(fit)
-										 , lwr = plogis(lwr)
-										 , upr = plogis(upr)
-					)
-					%>% select(var,lvl,lwr,fit,upr)
+		%>% mutate(NULL
+		, var=var
+		, fit = plogis(fit)
+		, lwr = plogis(lwr)
+		, upr = plogis(upr)
+		)
+		%>% select(var,lvl,lwr,fit,upr)
 	)
-	return(dd2)
+return(dd2)
 }
 
 
