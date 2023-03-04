@@ -1,11 +1,12 @@
+library(tidyverse);theme_set(theme_bw())
 library(shellpipes)
 
 ## Here we want to create a dummy model object, hack the coefficients and resimulate
 
 intercept <- 1
 main_age <- 1
-main_sex <- 1
-main_interaction <- 1
+main_sex <- -1
+main_interaction <- -1
 
 dummy <- rdsRead()
 
@@ -32,7 +33,18 @@ probs <- (predict(hackmod
 
 dummy$new_y <- sapply(probs, function(x){rbinom(n=1,size=1,prob=x)})
 
-print(dummy)
+obsprop <- (dummy
+	%>% group_by(age,sex)
+	%>% summarise(prop = mean(new_y)
+		, tot = n()
+	)
+)
 
+(ggplot(obsprop, aes(x=age,y=prop,group=sex, color=sex))
+	+ geom_point(aes(size=tot))
+	+ geom_line()
+	+ scale_size_area()
+	+ scale_color_manual(values=c("black","red"))
+)
 
-
+rdsSave(left_join(dummy,obsprop))

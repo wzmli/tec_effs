@@ -22,6 +22,10 @@ dummy.Rout: dummy.R
 simulate.Rout: simulate.R dummy.rds
 	$(pipeR)
 
+fit.Rout: fit.R simulate.rds
+	$(pipeR)
+
+
 ######################################################################
 
 ### Makestuff
