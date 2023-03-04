@@ -136,4 +136,25 @@ varpred <- function(mod, varname, frame, Smatrix, isolate=FALSE, isoValue=NULL, 
   return(df)
 }
 
+BSmat <- function(x){
+	Smat <- diag(length(coef(x)))
+	rownames(Smat) <- colnames(Smat) <- attr(coef(x),"name")
+	return(Smat)
+}
+
+tidyvarpred <- function(fitmod,var,modframe,Smat){
+	dd <- varpred(fitmod,var,modframe,Smat)
+	colnames(dd) <- c("lvl","fit","lwr","upr")
+	dd2 <- (dd 
+					%>% mutate(var=var
+										 , fit = plogis(fit)
+										 , lwr = plogis(lwr)
+										 , upr = plogis(upr)
+					)
+					%>% select(var,lvl,lwr,fit,upr)
+	)
+	return(dd2)
+}
+
+
 saveEnvironment()
