@@ -30,15 +30,18 @@ full.Rout: full.R
 
 ## main.fit.Rout: fit.R
 ## full.fit.Rout: fit.R
+pipeRimplicit += fit
 %.fit.Rout: fit.R simulate.rds %.rda
 	$(pipeR)
 
 ## main.varpred.Rout: varpred.R
+pipeRimplicit += varpred
 %.varpred.Rout: varpred.R ordfuns.rda %.fit.rda 
 	$(pipeR)
 
 ## main.effplot.Rout: effplot.R
 ## full.effplot.Rout: effplot.R
+pipeRimplicit += effplot
 %.effplot.Rout: effplot.R %.varpred.rds %.rda
 	$(pipeR)
 
