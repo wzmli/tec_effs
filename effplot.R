@@ -11,7 +11,7 @@ gg <- (ggplot(dat, aes(x=lvl, y=fit))
 	+ geom_point(aes(y=prop,size=tot),color="red")
 	+ scale_size_area()
 	+ facet_wrap(~var, scale="free")
-	+ ggtitle(formula)
+	## + ggtitle(formula)
 	+ ylab("Probability")
 )
 

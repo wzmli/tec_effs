@@ -13,6 +13,7 @@ Sources += $(wildcard *.R) README.md
 
 ######################################################################
 
+## Functions for ordinal variables
 ordfuns.Rout: ordfuns.R
 	$(pipeR)
 
@@ -34,15 +35,23 @@ pipeRimplicit += fit
 %.fit.Rout: fit.R simulate.rds %.rda
 	$(pipeR)
 
+pipeRimplicit += lin.R
+## full.lin.fit.Rout: 
+%.lin.fit.Rout: lin.R simulate.rds %.rda
+	$(pipeR)
+
 ## main.varpred.Rout: varpred.R
+## full.lin.varpred.Rout: 
 pipeRimplicit += varpred
 %.varpred.Rout: varpred.R ordfuns.rda %.fit.rda 
 	$(pipeR)
 
+## full.lin.effplot.Rout: effplot.R
+## main.lin.effplot.Rout: effplot.R
 ## main.effplot.Rout: effplot.R
 ## full.effplot.Rout: effplot.R
 pipeRimplicit += effplot
-%.effplot.Rout: effplot.R %.varpred.rds %.rda
+%.effplot.Rout: effplot.R %.varpred.rds
 	$(pipeR)
 
 ######################################################################
